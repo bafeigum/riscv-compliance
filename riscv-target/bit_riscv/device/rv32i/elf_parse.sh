@@ -7,9 +7,11 @@ riscv64-unknown-elf-objcopy -O binary -j .data $1 $1.bin.data
 xxd -e -c 4 $1.bin.data | awk '{print $2}' > $1.mem.data
 
 readelf -S $1 > $1.sections
+
+grep ".text.init" $1.sections | awk '{print "0x"$5}' > $1.text.start
+
 grep ".data" $1.sections | awk '{print "0x"$5}' > $1.data.start
 
-readelf -S $1 > $1.sections
 grep ".data" $1.sections | awk '{print "0x"$7}' > $1.data.size
 
 grep "<begin_signature>:" $1.objdump | awk '{print "0x"$1}' > $1.signature.start

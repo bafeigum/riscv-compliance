@@ -1,11 +1,14 @@
-TARGET_SIM ?= spike
+TARGET_SIM ?= bit_riscv
 ifeq ($(shell command -v $(TARGET_SIM) 2> /dev/null),)
     $(error Target simulator executable '$(TARGET_SIM)` not found)
 endif
 
 RUN_TARGET=\
-    $(TARGET_SIM) --isa=rv32i \
-        +signature=$(work_dir_isa)/$(*).signature.output \
+    $(TARGET_SIM) $(work_dir_isa)/$<.mem.text \
+        $(work_dir_isa)/$<.mem.data \
+	$(work_dir_isa)/$<.signature.start \
+	$(work_dir_isa)/$<.signature.size \
+        $(work_dir_isa)/$(*).signature.output \
         $(work_dir_isa)/$< 2> $(work_dir_isa)/$@
 
 RISCV_PREFIX   ?= riscv32-unknown-elf-

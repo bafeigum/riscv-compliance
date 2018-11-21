@@ -1,10 +1,7 @@
 #!/bin/bash
 
-riscv64-unknown-elf-objcopy -O binary -j .text.init $1 $1.bin.text
-xxd -e -c 4 $1.bin.text | awk '{print $2}' > $1.mem.text
-
-riscv64-unknown-elf-objcopy -O binary -j .data $1 $1.bin.data
-xxd -e -c 4 $1.bin.data | awk '{print $2}' > $1.mem.data
+riscv64-unknown-elf-objcopy -O binary $1 $1.bin
+xxd -e -c 4 $1.bin | awk '{print $2}' > $1.mem
 
 readelf -S $1 > $1.sections
 
@@ -26,5 +23,3 @@ echo $signature_start
 
 signature_size=$(($data_size-$(($signature_start - $data_start))))
 echo $signature_size > $1.signature.size
-
-

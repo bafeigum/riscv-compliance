@@ -1,6 +1,7 @@
 #!/bin/bash
 
 riscv64-unknown-elf-objcopy -O binary $1 $1.bin
+riscv64-unknown-elf-objcopy -O ihex $1 $1.ihex
 xxd -e -c 4 $1.bin | awk '{print $2}' > $1.mem
 
 readelf -S $1 > $1.sections

@@ -4,7 +4,7 @@ ifeq ($(shell command -v $(TARGET_SIM) 2> /dev/null),)
 endif
 
 RUN_TARGET=\
-    $(TARGET_SIM) $(work_dir_isa)/$<.mem\
+    $(TARGET_SIM) $(work_dir_isa)/$<.hex\
 	$(work_dir_isa)/$<.signature.start \
 	$(work_dir_isa)/$<.signature.size \
         $(work_dir_isa)/$(*).signature.output \

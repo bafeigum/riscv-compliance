@@ -3,7 +3,7 @@
 riscv64-unknown-elf-objcopy -O binary $1 $1.bin
 xxd -e -c 4 $1.bin | awk '{print $2}' > $1.hex
 # Print out mem file in little-endian
-xxd -c 4 $1.bin | awk '{print $5$4$3$2}' > $1.mem
+xxd -b -c 4 $1.bin | awk '{print $5$4$3$2}' > $1.mem
 
 readelf -S $1 > $1.sections
 
